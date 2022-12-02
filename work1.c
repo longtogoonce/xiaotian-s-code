@@ -1,60 +1,35 @@
 #include <stdio.h>
-struct location{
-    int x;
-    int y;
-};
+int a[1005],b[1005];
 int main()
 {
-    char map[12][12];
-    struct location F,C;
-    int i,j,total=0,w=0,q=0;
-    int step[4][2]={
-        {-1,0},{0,1},{1,0},{0,-1}
-    };
-    for(i=1;i<=10;i++)
+    int n,i,j;
+    a[0]=1,b[0]=1;
+    scanf("%d",&n);
+    for(i=2;i<=n;i++)
     {
-        scanf("%s",&map[i][1]);   
-    }
-    for(i=0;i<=11;i++) 
-    {   
-        map[0][i]='*',map[11][i]='*';
-        map[i][0]='*',map[i][11]='*';
-    }
-    for( i=1;i<=10;i++) 
-    {
-        for(j=1;j<=10;j++)
+        for(j=0;j<100;j++)
         {
-            if(map[i][j]=='C') C.x=i,C.y=j;
-            if(map[i][j]=='F') F.x=i,F.y=j;
-        }
-    }
-    while(1)
-    {
-        if(F.x==C.x&&F.y==C.y)
-        {
-            printf("%d",total);
-            break;
-        }
-        if(total>300000)
-        {
-			printf("0");
-            break;
-        }
-            if(map[F.x+step[w][0]][F.y+step[w][1]]!='*')
+            a[j]*=i;
+            if(a[j]>9)
             {
-                F.x+=step[w][0];
-                F.y+=step[w][1];
-            }    
-            else
-                w=(++w)%4;
-            if(map[C.x+step[q][0]][C.y+step[q][1]]!='*')
-            {
-                C.x+=step[q][0];
-                C.y+=step[q][1];
+                a[j+1]+=a[j]/10;
+                a[j]%=10;
             }
-            else
-                q=(++q)%4;
-        total++;
+        } 
+        for(j=0;j<100;j++)
+        {
+            b[j]+=a[j];
+            if(b[j]>9)
+            {
+                b[j+1]+=b[j]/10;
+                b[j]%=10;
+            }
+        }
+    }
+    for(j=100;b[j]==0&&j>=0;j--);
+    for(;j>=0;j--)
+    {
+        printf("%d",b[j]);
     }
     return 0;
 }
