@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    int n,i;
+    char num[101];
+    char num1[101];
+    char num2[101];
+    char num3[101];
+    scanf("%d %s",&n,num);
+    for(i=1;i<=n;i++)
+    {
+        int a;
+        scanf("%d",&a);
+        switch (a)
+        {
+            case 1:scanf("%s",num1);
+                    strcat(num,num1);
+                    printf("%s\n",num);
+                    break;
+            case 2:int b,c;
+                    scanf("%d %d",&b,&c);
+                    num[b+c]='\0';
+                    strcpy(num,&num[b]);
+                    printf("%s\n",num);
+                    break;
+            case 3:int d;
+                    scanf("%d %s",&d,num2);
+                    strcpy(num1,&num[d]);
+                    num[d]='\0';
+                    strcat(num,num2);
+                    strcat(num,num1);
+                    printf("%s\n",num);
+                    break;
+            case 4:scanf("%s",num3);
+                char *prt=strstr(num,num3);
+                if(prt==NULL)
+                printf("-1\n");
+                else
+                printf("%d\n",(int)(prt-num));
+                break;
+
+        }
+    }
+    return 0;
+}
