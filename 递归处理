@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+int num[1025][1025];
+void dfs(int x,int y,int z)
+{
+    int i,j;
+    if(z==1)
+        return;
+    for(i=x;i<x+z/2;i++)
+    {
+        for(j=y;j<y+z/2;j++)
+            num[i][j]=0;
+    }
+    z/=2;
+    dfs(x,y+z,z);
+    dfs(x+z,y,z);
+    dfs(x+z,y+z,z);
+}
+int main()
+{
+    int n,i,j,x;
+    scanf("%d",&n);
+    x=pow(2,n);
+    for(i=0;i<x;i++)
+    {
+        for(j=0;j<x;j++)
+            num[i][j]=1;
+    }
+    dfs(0,0,x);
+    for(i=0;i<x;i++)
+    {
+        for(j=0;j<x;j++)
+            printf("%d ",num[i][j]);
+        printf("\n");
+    }
+    return 0;
+}
