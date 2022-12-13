@@ -1,0 +1,22 @@
+#include <stdio.h>
+int num[10001];
+int main()
+{
+   int x,l,total=0;
+   int a,b,i;
+   scanf("%d %d",&l,&x);
+   while(x>=1)
+   {
+    scanf("%d %d",&a,&b);
+    for(i=a;i<=b;i++)
+        num[i]=1;
+        x--;
+   }
+   for(i=0;i<=l;i++)
+    {
+        if(num[i]==1)
+            total++;
+    }
+    printf("%d",l-total+1);
+return 0;
+}
