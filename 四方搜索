@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <math.h>
+int main()
+{
+    int a;
+    double c;
+    int b=100;
+    a=sqrt(b);
+    c=sqrt(b);
+    printf("%d %lf",a*a,c*c);
+    return 0;
+}
