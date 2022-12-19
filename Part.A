@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct strbuf {
+  int len;     //当前缓冲区（字符串）长度
+  int alloc;   //当前缓冲区（字符串）容量
+  char *buf;   //缓冲区（字符串）
+};
+
+void strbuf_init(struct strbuf *sb, size_t alloc)
+{
+    sb->alloc=alloc;
+    sb->buf=(char *)malloc(sizeof(char)*sb->alloc);
+    sb->len=0;
+}
+
+void strbuf_attach(struct strbuf *sb, void *str, size_t len, size_t alloc)
+{
+    while(strlen(str)>alloc)
+    {
+        sb->buf=realloc(sb->buf,sb->alloc*2);
+        sb->alloc*=2;
+    }
+    memcpy(sb->buf,str,len);
+    sb->len=strlen(str);
+}
+
+void strbuf_release(struct strbuf *sb)
+{
+    free(sb->buf);
+}
+
+void strbuf_swap(struct strbuf *a, struct strbuf *b)
+{
+    int len,alloc;
+    char *A,*B;
+    A=(char *)malloc(sizeof(char)*a->alloc+1);
+    B=(char *)malloc(sizeof(char)*b->alloc+1);
+    strcpy(A,a->buf);
+    strcpy(B,b->buf);
+    /*交换长度*/
+    len=a->len;
+    a->len=b->len;
+    b->len=len;
+    /*交换容量*/
+    alloc=a->alloc;
+    a->alloc=b->alloc;
+    b->alloc=alloc;
+    /*交换字符串*/
+    a->buf=realloc(a->buf,a->alloc);
+    b->buf=realloc(b->buf,b->alloc);
+    strcpy(a->buf,B);
+    strcpy(b->buf,A);
+}
+
+int strbuf_cmp(const struct strbuf *first, const struct strbuf *second)
+{
+    if(first->len==second->len)
+        return 1;
+    else
+        return 0;
+}
+
+char *strbuf_detach(struct strbuf *sb, size_t *sz)
+{
+    char *ptr;
+    ptr=(char *)malloc(sizeof(char)*sb->len+1);
+    strcpy(ptr,sb->buf);
+    sb->alloc=(int)*sz;
+    return ptr;
+}
+
+void strbuf_reset(struct strbuf *sb)
+{
+    sb->alloc=0;
+    memset(sb->buf,0,sb->len);
+    sb->len=0;
+}
